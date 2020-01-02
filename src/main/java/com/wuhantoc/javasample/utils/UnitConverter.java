@@ -2,7 +2,7 @@ package com.wuhantoc.javasample.utils;
 
 import com.wuhantoc.javasample.enums.UnitEnum;
 
-public class UnitConventer {
+public class UnitConverter {
 
   private static final double FOOT_TO_YARD_RATIO = 1d / 3d;
 

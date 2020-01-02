@@ -1,11 +1,11 @@
 package com.wuhantoc.javasample;
 
 import com.wuhantoc.javasample.enums.UnitEnum;
-import com.wuhantoc.javasample.utils.UnitConventer;
+import com.wuhantoc.javasample.utils.UnitConverter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class UnitConventerTest {
+class UnitConverterTest {
 
   @Test
   // should_xxx_when_xxx_given_xxx
@@ -15,7 +15,7 @@ class UnitConventerTest {
     UnitEnum unit = UnitEnum.FOOT;
 
     // when
-    double result = UnitConventer.convertToYard(number, unit);
+    double result = UnitConverter.convertToYard(number, unit);
 
     // then
     Assertions.assertEquals(1d/3d, result);
