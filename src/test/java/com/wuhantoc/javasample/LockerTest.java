@@ -8,10 +8,10 @@ import java.util.stream.Collectors;
 
 public class LockerTest {
 
-     private Locker locker =  new Locker();
+    private Locker locker = new Locker();
 
     @Test
-    void should_return_true_when_have_available_box (){
+    void should_return_true_when_have_available_box() {
 
         //when
         boolean availableFlag = locker.isAvailable();
@@ -21,7 +21,7 @@ public class LockerTest {
     }
 
     @Test
-    void should_return_not_null_scanner_code_and_empty_box_quantity_reduce_1_when_have_available_box () {
+    void should_return_not_null_scanner_code_and_empty_box_quantity_reduce_1_when_have_available_box() {
 
         //When
         String scannerCode = locker.getScannerCode();
@@ -33,7 +33,7 @@ public class LockerTest {
     }
 
     @Test
-    void should_return_null_when_saving_but_have_not_available_box () {
+    void should_return_null_when_saving_but_have_not_available_box() {
 
         //when
         fullAllBox();
@@ -74,7 +74,7 @@ public class LockerTest {
 
     }
 
-    private void fullAllBox () {
+    private void fullAllBox() {
         List<Box> boxList = locker.getBoxList();
 
         List<Box> fullBoxList = boxList.stream().peek(box -> box.setAvailable(false)).collect(Collectors.toList());

@@ -11,7 +11,7 @@ public class Locker {
     private ScannerCodeManager scannerCodeManager = new ScannerCodeManager();
 
     private List<Box> boxList = IntStream.range(0, capacity).mapToObj(Box::new)
-        .collect(Collectors.toList());
+            .collect(Collectors.toList());
 
     boolean isAvailable() {
         return getAvailableBox() != null;
