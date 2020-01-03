@@ -1,14 +1,12 @@
 package com.wuhantoc.javasample;
 
-import java.text.DateFormat;
-
 public class Box {
 
-    int location;
+    private int location;
 
-    boolean available = true;
+    private boolean available = true;
 
-    String scannerCode;
+    private String scannerCode;
 
     public String getScannerCode() {
         return scannerCode;
@@ -19,7 +17,7 @@ public class Box {
     }
 
     public void setScannerCode() {
-        this.scannerCode = String.valueOf(DateFormat.getDateInstance()).concat(String.format("%04d", this.location));
+        this.scannerCode = String.valueOf(System.currentTimeMillis()).concat(String.format("%04d", this.location));
     }
 
     public int getLocation() {

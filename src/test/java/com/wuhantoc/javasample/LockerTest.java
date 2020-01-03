@@ -21,23 +21,27 @@ public class LockerTest {
     }
 
     @Test
-    void should_return_not_null_scanner_code_when_have_available_box () {
+    void should_return_not_null_scanner_code_and_empty_box_quantity_reduce_1_when_have_available_box () {
 
         //When
         String scannerCode = locker.getScannerCode();
+        Long emptyBoxNum = locker.getBoxList().stream().filter(Box::isAvailable).count();
 
         //then
         Assertions.assertNotNull(scannerCode);
+        Assertions.assertEquals(23, emptyBoxNum.intValue());
     }
 
     @Test
-    void should_return_not_null_scanner_code_when_saving_and_have_available_box () {
+    void should_return_not_null_scanner_code_and_empty_box_quantity_reduce_1_when_saving_and_have_available_box () {
 
         //when
         String scannerCode = locker.lockBox();
+        Long emptyBoxNum = locker.getBoxList().stream().filter(Box::isAvailable).count();
 
         //then
         Assertions.assertNotNull(scannerCode);
+        Assertions.assertEquals(23, emptyBoxNum.intValue());
     }
 
     @Test
@@ -46,9 +50,11 @@ public class LockerTest {
         //when
         fullAllBox();
         String scannerCode = locker.lockBox();
+        Long usedBoxNum = locker.getBoxList().stream().filter(box -> !box.isAvailable()).count();
 
         //then
         Assertions.assertNull(scannerCode);
+        Assertions.assertEquals(24, usedBoxNum);
     }
 
     private void fullAllBox () {

@@ -10,6 +10,8 @@ public class Locker {
 
     private final int capacity = 24;
 
+    private List<Box> boxList = IntStream.range(0, capacity).mapToObj(Box::new).collect(Collectors.toList());
+
     public List<Box> getBoxList() {
         return boxList;
     }
@@ -18,10 +20,7 @@ public class Locker {
         this.boxList = boxList;
     }
 
-    private List<Box> boxList = IntStream.range(0, capacity).mapToObj(Box::new).collect(Collectors.toList());
-
-
-    public boolean isAvailable() {
+    boolean isAvailable() {
         return boxList.stream().anyMatch(Box::isAvailable);
     }
 
@@ -29,6 +28,7 @@ public class Locker {
         Optional<Box> oneBox = boxList.stream().filter(Box::isAvailable).findFirst();
 
         oneBox.get().setScannerCode();
+        oneBox.get().setAvailable(false);
 
         return oneBox.get().getScannerCode();
     }
