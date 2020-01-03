@@ -88,7 +88,6 @@ public class LockerTest {
         List<Box> boxList = locker.getBoxList();
 
         List<Box> fullBoxList = boxList.stream().map(box -> {
-            box.setScannerCode();
             box.setAvailable(false);
             return box;
         }).collect(Collectors.toList());

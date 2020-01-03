@@ -6,19 +6,10 @@ public class Box {
 
     private boolean available = true;
 
-    private String scannerCode;
-
-    public String getScannerCode() {
-        return scannerCode;
-    }
-
     public Box(int location) {
         this.location = location;
     }
 
-    public void setScannerCode() {
-        this.scannerCode = String.valueOf(System.currentTimeMillis()).concat(String.format("%04d", this.location));
-    }
 
     public int getLocation() {
         return location;

@@ -9,8 +9,10 @@ import java.util.stream.IntStream;
 public class Locker {
 
     private final int capacity = 24;
+    private ScannerCodeManager scannerCodeManager = new ScannerCodeManager();
 
-    private List<Box> boxList = IntStream.range(0, capacity).mapToObj(Box::new).collect(Collectors.toList());
+    private List<Box> boxList = IntStream.range(0, capacity).mapToObj(Box::new)
+        .collect(Collectors.toList());
 
     public List<Box> getBoxList() {
         return boxList;
@@ -21,19 +23,19 @@ public class Locker {
     }
 
     boolean isAvailable() {
-        return boxList.stream().anyMatch(Box::isAvailable);
+        return getAvailableBox() != null;
+    }
+
+    public Box getAvailableBox() {
+        return boxList.stream().filter(Box::isAvailable).findAny().orElse(null);
     }
 
     String getScannerCode() {
-        Optional<Box> oneBox = boxList.stream().filter(Box::isAvailable).findFirst();
-
-        oneBox.get().setScannerCode();
-        oneBox.get().setAvailable(false);
-
-        return oneBox.get().getScannerCode();
+        Box availableBox = getAvailableBox();
+        return scannerCodeManager.generateScannerCode(availableBox);
     }
 
-    String lockBox () {
+    String lockBox() {
         if (isAvailable()) {
             return getScannerCode();
         }
@@ -41,14 +43,6 @@ public class Locker {
     }
 
     Box unLockBox(String scannerCode) {
-        List<Box> boxes = this.boxList.stream().filter(box -> box.getScannerCode() != null && box.getScannerCode().equals(scannerCode)).collect(Collectors.toList());
-
-        if(!boxes.isEmpty()) {
-            Box box = boxes.get(0);
-            box.setAvailable(true);
-            boxList.set(box.getLocation(), box);
-            return box;
-        }
-        return null;
+        return scannerCodeManager.verifyScannerCode(scannerCode);
     }
 }
