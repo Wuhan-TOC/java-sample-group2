@@ -31,21 +31,21 @@ public class LockerTest {
     }
 
     @Test
-    void should_return_not_null_scanner_code_when_input_saving_and_have_available_box () {
+    void should_return_not_null_scanner_code_when_saving_and_have_available_box () {
 
         //when
-        String scannerCode = locker.useLocker("save");
+        String scannerCode = locker.lockBox();
 
         //then
         Assertions.assertNotNull(scannerCode);
     }
 
     @Test
-    void should_return_null_scanner_code_when_input_saving_but_have_not_available_box () {
+    void should_return_null_when_saving_but_have_not_available_box () {
 
         //when
         fullAllBox();
-        String scannerCode = locker.useLocker("save");
+        String scannerCode = locker.lockBox();
 
         //then
         Assertions.assertNull(scannerCode);

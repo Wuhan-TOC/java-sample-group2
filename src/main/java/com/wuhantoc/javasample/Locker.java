@@ -9,7 +9,6 @@ import java.util.stream.IntStream;
 public class Locker {
 
     private final int capacity = 24;
-    private final String SAVE_ACTION = "save";
 
     public List<Box> getBoxList() {
         return boxList;
@@ -34,8 +33,8 @@ public class Locker {
         return oneBox.get().getScannerCode();
     }
 
-    String useLocker (String action) {
-        if (action.equals(SAVE_ACTION) && isAvailable()) {
+    String lockBox () {
+        if (isAvailable()) {
             return getScannerCode();
         }
         return null;
