@@ -14,8 +14,12 @@ public class Box {
         return scannerCode;
     }
 
+    public Box(int location) {
+        this.location = location;
+    }
+
     public void setScannerCode() {
-        this.scannerCode = String.valueOf(DateFormat.getDateInstance()).concat(String.format("%04d", location));
+        this.scannerCode = String.valueOf(DateFormat.getDateInstance()).concat(String.format("%04d", this.location));
     }
 
     public int getLocation() {
