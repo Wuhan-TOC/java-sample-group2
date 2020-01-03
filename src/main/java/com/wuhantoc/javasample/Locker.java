@@ -39,4 +39,16 @@ public class Locker {
         }
         return null;
     }
+
+    Box unLockBox(String scannerCode) {
+        List<Box> boxes = this.boxList.stream().filter(box -> box.getScannerCode() != null && box.getScannerCode().equals(scannerCode)).collect(Collectors.toList());
+
+        if(!boxes.isEmpty()) {
+            Box box = boxes.get(0);
+            box.setAvailable(true);
+            boxList.set(box.getLocation(), box);
+            return box;
+        }
+        return null;
+    }
 }

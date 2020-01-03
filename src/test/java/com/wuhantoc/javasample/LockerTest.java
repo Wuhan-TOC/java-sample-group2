@@ -57,6 +57,33 @@ public class LockerTest {
         Assertions.assertEquals(24, usedBoxNum);
     }
 
+    @Test
+    void should_return_box_info_when_given_valid_scanner_code() {
+        //given
+        String scannerCode = locker.lockBox();
+
+        //when
+        Box box = locker.unLockBox(scannerCode);
+
+        //then
+        Assertions.assertNotNull(box);
+        Assertions.assertTrue(box.isAvailable());
+
+    }
+
+    @Test
+    void should_return_null_when_given_invalid_scanner_code() {
+        //given
+        String scannerCode = String.valueOf(System.currentTimeMillis()).concat("1111");
+
+        //when
+        Box box = locker.unLockBox(scannerCode);
+
+        //then
+        Assertions.assertNull(box);
+
+    }
+
     private void fullAllBox () {
         List<Box> boxList = locker.getBoxList();
 
