@@ -46,7 +46,7 @@ public class LockerTest {
     }
 
     @Test
-    void should_return_box_and_available_box_count_add_1_info_when_given_valid_scanner_code() {
+    void should_return_box_and_available_box_count_add_1_when_given_valid_scanner_code() {
         //given 23 available box
         String scannerCode = locker.getScannerCode();
 
@@ -58,20 +58,6 @@ public class LockerTest {
         Assertions.assertNotNull(box);
         Assertions.assertTrue(box.isAvailable());
         Assertions.assertEquals(24, availableBoxCount);
-
-    }
-
-    @Test
-    void should_return_box_info_when_given_valid_scanner_code() {
-        //given
-        String scannerCode = locker.getScannerCode();
-
-        //when
-        Box box = locker.unLockBox(scannerCode);
-
-        //then
-        Assertions.assertNotNull(box);
-        Assertions.assertTrue(box.isAvailable());
 
     }
 
