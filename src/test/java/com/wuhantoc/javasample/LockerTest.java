@@ -25,23 +25,11 @@ public class LockerTest {
 
         //When
         String scannerCode = locker.getScannerCode();
-        Long emptyBoxNum = locker.getBoxList().stream().filter(Box::isAvailable).count();
+        int availableBoxCount = locker.getAvailableBoxCount();
 
         //then
         Assertions.assertNotNull(scannerCode);
-        Assertions.assertEquals(23, emptyBoxNum.intValue());
-    }
-
-    @Test
-    void should_return_not_null_scanner_code_and_empty_box_quantity_reduce_1_when_saving_and_have_available_box () {
-
-        //when
-        String scannerCode = locker.lockBox();
-        Long emptyBoxNum = locker.getBoxList().stream().filter(Box::isAvailable).count();
-
-        //then
-        Assertions.assertNotNull(scannerCode);
-        Assertions.assertEquals(23, emptyBoxNum.intValue());
+        Assertions.assertEquals(23, availableBoxCount);
     }
 
     @Test
@@ -49,18 +37,34 @@ public class LockerTest {
 
         //when
         fullAllBox();
-        String scannerCode = locker.lockBox();
-        Long usedBoxNum = locker.getBoxList().stream().filter(box -> !box.isAvailable()).count();
+        String scannerCode = locker.getScannerCode();
+        int availableBoxCount = locker.getAvailableBoxCount();
 
         //then
         Assertions.assertNull(scannerCode);
-        Assertions.assertEquals(24, usedBoxNum);
+        Assertions.assertEquals(0, availableBoxCount);
+    }
+
+    @Test
+    void should_return_box_and_available_box_count_add_1_info_when_given_valid_scanner_code() {
+        //given 23 available box
+        String scannerCode = locker.getScannerCode();
+
+        //when
+        Box box = locker.unLockBox(scannerCode);
+        int availableBoxCount = locker.getAvailableBoxCount();
+
+        //then
+        Assertions.assertNotNull(box);
+        Assertions.assertTrue(box.isAvailable());
+        Assertions.assertEquals(24, availableBoxCount);
+
     }
 
     @Test
     void should_return_box_info_when_given_valid_scanner_code() {
         //given
-        String scannerCode = locker.lockBox();
+        String scannerCode = locker.getScannerCode();
 
         //when
         Box box = locker.unLockBox(scannerCode);
@@ -74,7 +78,7 @@ public class LockerTest {
     @Test
     void should_return_null_when_given_invalid_scanner_code() {
         //given
-        String scannerCode = String.valueOf(System.currentTimeMillis()).concat("1111");
+        String scannerCode = "123";
 
         //when
         Box box = locker.unLockBox(scannerCode);
@@ -87,10 +91,7 @@ public class LockerTest {
     private void fullAllBox () {
         List<Box> boxList = locker.getBoxList();
 
-        List<Box> fullBoxList = boxList.stream().map(box -> {
-            box.setAvailable(false);
-            return box;
-        }).collect(Collectors.toList());
+        List<Box> fullBoxList = boxList.stream().peek(box -> box.setAvailable(false)).collect(Collectors.toList());
 
         locker.setBoxList(fullBoxList);
     }
