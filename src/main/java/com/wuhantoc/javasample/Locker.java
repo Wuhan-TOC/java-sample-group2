@@ -3,6 +3,7 @@ package com.wuhantoc.javasample;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class Locker {
 
@@ -21,5 +22,11 @@ public class Locker {
 
     public boolean isAvailable() {
         return boxList.stream().anyMatch(box -> box.isAvailable());
+    }
+
+    String getScannerCode() {
+        Optional<Box> oneBox = boxList.stream().filter(box -> box.isAvailable()).findFirst();
+        oneBox.get().setScannerCode();
+        return oneBox.get().getScannerCode();
     }
 }
