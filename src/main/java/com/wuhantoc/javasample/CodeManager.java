@@ -1,9 +1,7 @@
 package com.wuhantoc.javasample;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.UUID;
 
 public class CodeManager {
@@ -19,13 +17,7 @@ public class CodeManager {
     public Box verifyScannerCode(String scannerCode) {
         Box box = boxMap.get(scannerCode);
         if (box != null) {
-            Iterator<Entry<String, Box>> iterator = boxMap.entrySet().iterator();
-            while (iterator.hasNext()) {
-                if (iterator.next().equals(scannerCode)) {
-                    iterator.remove();
-                    break;
-                }
-            }
+            boxMap.remove(scannerCode);
         }
         return box;
     }
