@@ -24,7 +24,7 @@ public class LockerTest {
     void should_return_not_null_scanner_code_and_empty_box_quantity_reduce_1_when_have_available_box() {
 
         //When
-        String scannerCode = locker.getScannerCode();
+        String scannerCode = locker.saveBox();
         int availableBoxCount = locker.getAvailableBoxCount();
 
         //then
@@ -37,7 +37,7 @@ public class LockerTest {
 
         //when
         fullAllBox();
-        String scannerCode = locker.getScannerCode();
+        String scannerCode = locker.saveBox();
         int availableBoxCount = locker.getAvailableBoxCount();
 
         //then
@@ -48,7 +48,7 @@ public class LockerTest {
     @Test
     void should_return_box_and_available_box_count_add_1_when_given_valid_scanner_code() {
         //given 23 available box
-        String scannerCode = locker.getScannerCode();
+        String scannerCode = locker.saveBox();
 
         //when
         Box box = locker.unLockBox(scannerCode);

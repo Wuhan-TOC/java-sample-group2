@@ -6,14 +6,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.UUID;
 
-public class ScannerCodeManager {
+public class CodeManager {
 
     private Map<String, Box> boxMap = new HashMap<>();
 
     public String generateScannerCode(Box box) {
         String scannerCode = UUID.randomUUID().toString();
         boxMap.put(scannerCode, box);
-        box.setAvailable(false);
         return scannerCode;
     }
 
@@ -27,7 +26,6 @@ public class ScannerCodeManager {
                     break;
                 }
             }
-            box.setAvailable(true);
         }
         return box;
     }
