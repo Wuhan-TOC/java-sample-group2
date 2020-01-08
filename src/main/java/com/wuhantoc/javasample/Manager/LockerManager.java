@@ -17,6 +17,10 @@ public class LockerManager {
     private List<Box> boxList = IntStream.range(0, capacity).mapToObj(Box::new)
             .collect(Collectors.toList());
 
+    public LockerManager(int lockerNumber) {
+        this.lockerNumber = lockerNumber;
+    }
+
     public Ticket saveBox() {
         Box availableBox = getAvailableBox();
         if (availableBox != null) {
@@ -45,5 +49,9 @@ public class LockerManager {
 
     public void setBoxList(List<Box> boxList) {
         this.boxList = boxList;
+    }
+
+    public int getLockerNumber() {
+        return lockerNumber;
     }
 }

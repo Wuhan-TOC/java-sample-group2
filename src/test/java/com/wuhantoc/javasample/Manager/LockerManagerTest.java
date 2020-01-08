@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class LockerManagerTest {
 
-    private LockerManager lockerManager = new LockerManager();
+    private LockerManager lockerManager = new LockerManager(1);
 
     @Test
     void should_return_not_null_ticket_and_empty_box_quantity_reduce_1_when_have_available_box() {
