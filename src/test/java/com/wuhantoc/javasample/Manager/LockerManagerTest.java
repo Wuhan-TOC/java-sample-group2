@@ -5,20 +5,15 @@ import com.wuhantoc.javasample.entity.Ticket;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class LockerManagerTest {
-
-    private LockerManager lockerManager = new LockerManager(1);
 
     @Test
     void should_return_not_null_ticket_and_empty_box_quantity_reduce_1_when_have_available_box() {
         //given 24 available boxes
-
+        LockerManager lockerManager = new LockerManager(1);
         //When
         Ticket ticket = lockerManager.saveBox();
-        int availableBoxCount = getAvailableBoxCount();
+        int availableBoxCount = lockerManager.getAvailableCount();
 
         //then
         Assertions.assertNotNull(ticket);
@@ -28,11 +23,12 @@ public class LockerManagerTest {
     @Test
     void should_return_null_when_saving_but_have_not_available_box() {
         //given 0 available box
-        fullAllBox();
+        LockerManager lockerManager = new LockerManager(1);
+        fullAllBox(lockerManager);
 
         //when
         Ticket scannerCode = lockerManager.saveBox();
-        int availableBoxCount = getAvailableBoxCount();
+        int availableBoxCount = lockerManager.getAvailableCount();
 
         //then
         Assertions.assertNull(scannerCode);
@@ -41,12 +37,14 @@ public class LockerManagerTest {
 
     @Test
     void should_return_box_and_available_box_count_add_1_when_given_valid_scanner_code() {
+
         //given 23 available boxes
+        LockerManager lockerManager = new LockerManager(1);
         Ticket ticket = lockerManager.saveBox();
 
         //when
         Box box = lockerManager.unLockBox(ticket.getScannerCode());
-        int availableBoxCount = getAvailableBoxCount();
+        int availableBoxCount = lockerManager.getAvailableCount();
 
         //then
         Assertions.assertNotNull(box);
@@ -58,6 +56,7 @@ public class LockerManagerTest {
     @Test
     void should_return_null_when_given_invalid_scanner_code() {
         //given
+        LockerManager lockerManager = new LockerManager(1);
         String scannerCode = "123";
 
         //when
@@ -68,15 +67,9 @@ public class LockerManagerTest {
 
     }
 
-    private int getAvailableBoxCount() {
-        return (int) lockerManager.getBoxList().stream().filter(Box::isAvailable).count();
-    }
-
-    private void fullAllBox() {
-        List<Box> boxList = lockerManager.getBoxList();
-
-        List<Box> fullBoxList = boxList.stream().peek(box -> box.setAvailable(false)).collect(Collectors.toList());
-
-        lockerManager.setBoxList(fullBoxList);
+    private void fullAllBox(LockerManager lockerManager) {
+        for (int i = 0; i < lockerManager.getCapacity(); i++) {
+            lockerManager.saveBox();
+        }
     }
 }

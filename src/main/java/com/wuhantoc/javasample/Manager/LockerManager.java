@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 public class LockerManager {
 
     private final int capacity = 24;
+    private int availableCount = capacity;
     private int lockerNumber = 1;
     private CodeManager codeManager = new CodeManager();
 
@@ -25,6 +26,7 @@ public class LockerManager {
         Box availableBox = getAvailableBox();
         if (availableBox != null) {
             availableBox.setAvailable(false);
+            availableCount--;
             String scannerCode = codeManager.generateScannerCode(availableBox);
             return new Ticket(new Date(), lockerNumber, scannerCode);
         }
@@ -39,8 +41,13 @@ public class LockerManager {
         Box box = codeManager.verifyScannerCode(scannerCode);
         if (box != null) {
             box.setAvailable(true);
+            availableCount++;
         }
         return box;
+    }
+
+    public Boolean isAvailable() {
+        return availableCount > 0;
     }
 
     public List<Box> getBoxList() {
@@ -53,5 +60,13 @@ public class LockerManager {
 
     public int getLockerNumber() {
         return lockerNumber;
+    }
+
+    public int getAvailableCount() {
+        return availableCount;
+    }
+
+    public int getCapacity() {
+        return capacity;
     }
 }
