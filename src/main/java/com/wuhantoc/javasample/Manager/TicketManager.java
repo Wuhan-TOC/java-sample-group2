@@ -12,7 +12,7 @@ public class TicketManager {
     private Map<String, Box> boxMap = new HashMap<>();
 
     public Ticket generateTicket(Box box) {
-        String scannerCode = UUID.randomUUID().toString();
+        String scannerCode = String.format("%s%04d", UUID.randomUUID().toString(), box.getLockNumber());
         boxMap.put(scannerCode, box);
         return new Ticket(box.getLocation(), box.getLockNumber(), scannerCode);
     }
