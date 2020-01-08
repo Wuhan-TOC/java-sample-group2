@@ -3,7 +3,6 @@ package com.wuhantoc.javasample.Manager;
 import com.wuhantoc.javasample.entity.Box;
 import com.wuhantoc.javasample.entity.Ticket;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -13,13 +12,14 @@ public class LockerManager {
     private final int capacity = 24;
     private int availableCount = capacity;
     private int lockerNumber = 1;
-    private CodeManager codeManager = new CodeManager();
+    private TicketManager ticketManager = new TicketManager();
 
-    private List<Box> boxList = IntStream.range(0, capacity).mapToObj(Box::new)
-            .collect(Collectors.toList());
+    private List<Box> boxList;
 
     public LockerManager(int lockerNumber) {
         this.lockerNumber = lockerNumber;
+        boxList = IntStream.range(0, capacity).mapToObj(location -> new Box(lockerNumber, location + 1)).collect(Collectors.toList());
+
     }
 
     public Ticket saveBox() {
@@ -27,8 +27,7 @@ public class LockerManager {
         if (availableBox != null) {
             availableBox.setAvailable(false);
             availableCount--;
-            String scannerCode = codeManager.generateScannerCode(availableBox);
-            return new Ticket(new Date(), lockerNumber, scannerCode);
+            return ticketManager.generateTicket(availableBox);
         }
         return null;
     }
@@ -37,8 +36,8 @@ public class LockerManager {
         return boxList.stream().filter(Box::isAvailable).findAny().orElse(null);
     }
 
-    public Box unLockBox(String scannerCode) {
-        Box box = codeManager.verifyScannerCode(scannerCode);
+    public Box unLockBox(Ticket ticket) {
+        Box box = ticketManager.verifyTicket(ticket);
         if (box != null) {
             box.setAvailable(true);
             availableCount++;

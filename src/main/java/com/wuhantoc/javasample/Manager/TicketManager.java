@@ -1,25 +1,26 @@
 package com.wuhantoc.javasample.Manager;
 
 import com.wuhantoc.javasample.entity.Box;
+import com.wuhantoc.javasample.entity.Ticket;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class CodeManager {
+public class TicketManager {
 
     private Map<String, Box> boxMap = new HashMap<>();
 
-    public String generateScannerCode(Box box) {
+    public Ticket generateTicket(Box box) {
         String scannerCode = UUID.randomUUID().toString();
         boxMap.put(scannerCode, box);
-        return scannerCode;
+        return new Ticket(box.getLocation(), box.getLockNumber(), scannerCode);
     }
 
-    public Box verifyScannerCode(String scannerCode) {
-        Box box = boxMap.get(scannerCode);
+    public Box verifyTicket(Ticket ticket) {
+        Box box = boxMap.get(ticket.getScannerCode());
         if (box != null) {
-            boxMap.remove(scannerCode);
+            boxMap.remove(ticket.getScannerCode());
         }
         return box;
     }

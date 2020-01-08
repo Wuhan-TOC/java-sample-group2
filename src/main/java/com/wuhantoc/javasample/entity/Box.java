@@ -4,9 +4,12 @@ public class Box {
 
     private int location;
 
+    private int lockNumber;
+
     private boolean available = true;
 
-    public Box(int location) {
+    public Box(int lockNumber, int location) {
+        this.lockNumber = lockNumber;
         this.location = location;
     }
 
@@ -25,5 +28,13 @@ public class Box {
 
     public void setAvailable(boolean available) {
         this.available = available;
+    }
+
+    public int getLockNumber() {
+        return lockNumber;
+    }
+
+    public void setLockNumber(int lockNumber) {
+        this.lockNumber = lockNumber;
     }
 }

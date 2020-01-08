@@ -43,7 +43,7 @@ public class LockerManagerTest {
         Ticket ticket = lockerManager.saveBox();
 
         //when
-        Box box = lockerManager.unLockBox(ticket.getScannerCode());
+        Box box = lockerManager.unLockBox(ticket);
         int availableBoxCount = lockerManager.getAvailableCount();
 
         //then
@@ -57,10 +57,10 @@ public class LockerManagerTest {
     void should_return_null_when_given_invalid_scanner_code() {
         //given
         LockerManager lockerManager = new LockerManager(1);
-        String scannerCode = "123";
+        Ticket ticket = new Ticket(1,2,"123");
 
         //when
-        Box box = lockerManager.unLockBox(scannerCode);
+        Box box = lockerManager.unLockBox(ticket);
 
         //then
         Assertions.assertNull(box);
