@@ -13,18 +13,6 @@ public class Locker {
     private List<Box> boxList = IntStream.range(0, capacity).mapToObj(Box::new)
             .collect(Collectors.toList());
 
-    boolean isAvailable() {
-        return getAvailableBox() != null;
-    }
-
-    public int getAvailableBoxCount() {
-        return (int) boxList.stream().filter(Box::isAvailable).count();
-    }
-
-    private Box getAvailableBox() {
-        return boxList.stream().filter(Box::isAvailable).findAny().orElse(null);
-    }
-
     public String saveBox() {
         Box availableBox = getAvailableBox();
         if (availableBox != null) {
@@ -32,6 +20,10 @@ public class Locker {
             return codeManager.generateScannerCode(availableBox);
         }
         return null;
+    }
+
+    private Box getAvailableBox() {
+        return boxList.stream().filter(Box::isAvailable).findAny().orElse(null);
     }
 
     public Box unLockBox(String scannerCode) {
