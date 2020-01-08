@@ -1,11 +1,14 @@
-package com.wuhantoc.javasample;
+package com.wuhantoc.javasample.Manager;
+
+import com.wuhantoc.javasample.entity.Box;
+import com.wuhantoc.javasample.entity.Ticket;
 
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class Locker {
+public class LockerManager {
 
     private final int capacity = 24;
     private int lockerNumber = 1;

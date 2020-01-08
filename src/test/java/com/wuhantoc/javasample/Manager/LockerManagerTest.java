@@ -1,21 +1,23 @@
-package com.wuhantoc.javasample;
+package com.wuhantoc.javasample.Manager;
 
+import com.wuhantoc.javasample.entity.Box;
+import com.wuhantoc.javasample.entity.Ticket;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class LockerTest {
+public class LockerManagerTest {
 
-    private Locker locker = new Locker();
+    private LockerManager lockerManager = new LockerManager();
 
     @Test
     void should_return_not_null_ticket_and_empty_box_quantity_reduce_1_when_have_available_box() {
         //given 24 available boxes
 
         //When
-        Ticket ticket = locker.saveBox();
+        Ticket ticket = lockerManager.saveBox();
         int availableBoxCount = getAvailableBoxCount();
 
         //then
@@ -29,7 +31,7 @@ public class LockerTest {
         fullAllBox();
 
         //when
-        Ticket scannerCode = locker.saveBox();
+        Ticket scannerCode = lockerManager.saveBox();
         int availableBoxCount = getAvailableBoxCount();
 
         //then
@@ -40,10 +42,10 @@ public class LockerTest {
     @Test
     void should_return_box_and_available_box_count_add_1_when_given_valid_scanner_code() {
         //given 23 available boxes
-        Ticket ticket = locker.saveBox();
+        Ticket ticket = lockerManager.saveBox();
 
         //when
-        Box box = locker.unLockBox(ticket.getScannerCode());
+        Box box = lockerManager.unLockBox(ticket.getScannerCode());
         int availableBoxCount = getAvailableBoxCount();
 
         //then
@@ -59,7 +61,7 @@ public class LockerTest {
         String scannerCode = "123";
 
         //when
-        Box box = locker.unLockBox(scannerCode);
+        Box box = lockerManager.unLockBox(scannerCode);
 
         //then
         Assertions.assertNull(box);
@@ -67,14 +69,14 @@ public class LockerTest {
     }
 
     private int getAvailableBoxCount() {
-        return (int) locker.getBoxList().stream().filter(Box::isAvailable).count();
+        return (int) lockerManager.getBoxList().stream().filter(Box::isAvailable).count();
     }
 
     private void fullAllBox() {
-        List<Box> boxList = locker.getBoxList();
+        List<Box> boxList = lockerManager.getBoxList();
 
         List<Box> fullBoxList = boxList.stream().peek(box -> box.setAvailable(false)).collect(Collectors.toList());
 
-        locker.setBoxList(fullBoxList);
+        lockerManager.setBoxList(fullBoxList);
     }
 }

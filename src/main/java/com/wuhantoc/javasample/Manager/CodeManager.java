@@ -1,4 +1,6 @@
-package com.wuhantoc.javasample;
+package com.wuhantoc.javasample.Manager;
+
+import com.wuhantoc.javasample.entity.Box;
 
 import java.util.HashMap;
 import java.util.Map;

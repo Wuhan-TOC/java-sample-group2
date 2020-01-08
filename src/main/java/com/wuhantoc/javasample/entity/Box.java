@@ -1,4 +1,4 @@
-package com.wuhantoc.javasample;
+package com.wuhantoc.javasample.entity;
 
 public class Box {
 
