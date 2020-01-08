@@ -1,6 +1,6 @@
 package com.wuhantoc.javasample;
 
-
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -8,16 +8,18 @@ import java.util.stream.IntStream;
 public class Locker {
 
     private final int capacity = 24;
+    private int lockerNumber = 1;
     private CodeManager codeManager = new CodeManager();
 
     private List<Box> boxList = IntStream.range(0, capacity).mapToObj(Box::new)
             .collect(Collectors.toList());
 
-    public String saveBox() {
+    public Ticket saveBox() {
         Box availableBox = getAvailableBox();
         if (availableBox != null) {
             availableBox.setAvailable(false);
-            return codeManager.generateScannerCode(availableBox);
+            String scannerCode = codeManager.generateScannerCode(availableBox);
+            return new Ticket(new Date(), lockerNumber, scannerCode);
         }
         return null;
     }

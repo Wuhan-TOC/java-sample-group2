@@ -11,15 +11,15 @@ public class LockerTest {
     private Locker locker = new Locker();
 
     @Test
-    void should_return_not_null_scanner_code_and_empty_box_quantity_reduce_1_when_have_available_box() {
+    void should_return_not_null_ticket_and_empty_box_quantity_reduce_1_when_have_available_box() {
         //given 24 available boxes
 
         //When
-        String scannerCode = locker.saveBox();
+        Ticket ticket = locker.saveBox();
         int availableBoxCount = getAvailableBoxCount();
 
         //then
-        Assertions.assertNotNull(scannerCode);
+        Assertions.assertNotNull(ticket);
         Assertions.assertEquals(23, availableBoxCount);
     }
 
@@ -29,7 +29,7 @@ public class LockerTest {
         fullAllBox();
 
         //when
-        String scannerCode = locker.saveBox();
+        Ticket scannerCode = locker.saveBox();
         int availableBoxCount = getAvailableBoxCount();
 
         //then
@@ -40,10 +40,10 @@ public class LockerTest {
     @Test
     void should_return_box_and_available_box_count_add_1_when_given_valid_scanner_code() {
         //given 23 available boxes
-        String scannerCode = locker.saveBox();
+        Ticket ticket = locker.saveBox();
 
         //when
-        Box box = locker.unLockBox(scannerCode);
+        Box box = locker.unLockBox(ticket.getScannerCode());
         int availableBoxCount = getAvailableBoxCount();
 
         //then
