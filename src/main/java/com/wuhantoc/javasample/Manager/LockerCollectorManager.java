@@ -11,7 +11,14 @@ public class LockerCollectorManager {
                         .collect(Collectors.toList());
 
     public LockerManager findLockerByNumber(Integer lockerNumber) {
-        return lockerManagerList.stream().filter(lockerManager -> compareLockerNumber(lockerManager, lockerNumber)).findAny().orElse(null);
+        if (validateLockerNumber(lockerNumber)) {
+            return lockerManagerList.stream().filter(lockerManager -> compareLockerNumber(lockerManager, lockerNumber)).findAny().orElse(null);
+        }
+        return null;
+    }
+
+    private boolean validateLockerNumber(Integer lockerNumber) {
+        return (lockerNumber <= lockerNum) && lockerNumber > 0;
     }
 
     private boolean compareLockerNumber(LockerManager lockerManager, Integer lockerNumber) {
