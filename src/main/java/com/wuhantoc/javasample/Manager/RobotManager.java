@@ -2,19 +2,27 @@ package com.wuhantoc.javasample.Manager;
 
 import com.wuhantoc.javasample.entity.Box;
 import com.wuhantoc.javasample.entity.Ticket;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class RobotManager {
 
-    private final int lockerSum = 10;
-    private List<LockerManager> lockerManagers = IntStream.range(0, lockerSum)
-        .mapToObj(lockerNumber -> new LockerManager(lockerNumber + 1))
-        .collect(Collectors.toList());
+    private final int lockerSum;
+    private final List<LockerManager> lockerManagers;
+    private static final String INIT_ERROR = "lockerSum must same as capacities' size";
 
-    public LockerManager findLockerByNumber(Integer lockerNumber) {
+    RobotManager(int lockerSum, List<Integer> capacities) {
+        this.lockerSum = lockerSum;
+        if (capacities.size() != lockerSum) {
+            throw new RuntimeException(INIT_ERROR);
+        }
+        lockerManagers = IntStream.range(0, lockerSum).mapToObj(
+            lockerNumber -> new LockerManager(lockerNumber + 1, capacities.get(lockerNumber)))
+            .collect(Collectors.toList());
+    }
+
+    public LockerManager findLockerByNumber(int lockerNumber) {
         if (validateLockerNumber(lockerNumber)) {
             return lockerManagers
                 .stream().filter(lockerManager -> compareLockerNumber(lockerManager, lockerNumber))

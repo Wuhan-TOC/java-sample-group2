@@ -5,12 +5,12 @@ import com.wuhantoc.javasample.entity.Ticket;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class LockerManagerTest {
+class LockerManagerTest {
 
     @Test
     void should_return_not_null_ticket_and_empty_box_quantity_reduce_1_when_have_available_box() {
         //given 24 available boxes
-        LockerManager lockerManager = new LockerManager(1);
+        LockerManager lockerManager = new LockerManager(1,24);
         //When
         Ticket ticket = lockerManager.savePackage();
         int availableBoxCount = lockerManager.getAvailableCount();
@@ -23,7 +23,7 @@ public class LockerManagerTest {
     @Test
     void should_return_null_when_saving_but_have_not_available_box() {
         //given 0 available box
-        LockerManager lockerManager = new LockerManager(1);
+        LockerManager lockerManager = new LockerManager(1,0);
         fullAllBox(lockerManager);
 
         //when
@@ -39,7 +39,7 @@ public class LockerManagerTest {
     void should_return_box_and_available_box_count_add_1_when_given_valid_scanner_code() {
 
         //given 23 available boxes
-        LockerManager lockerManager = new LockerManager(1);
+        LockerManager lockerManager = new LockerManager(1,24);
         Ticket ticket = lockerManager.savePackage();
 
         //when
@@ -56,7 +56,7 @@ public class LockerManagerTest {
     @Test
     void should_return_null_when_given_invalid_scanner_code() {
         //given
-        LockerManager lockerManager = new LockerManager(1);
+        LockerManager lockerManager = new LockerManager(1,24);
         Ticket ticket = new Ticket(1,2,"123");
 
         //when

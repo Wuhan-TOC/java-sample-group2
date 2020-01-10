@@ -2,12 +2,12 @@ package com.wuhantoc.javasample.entity;
 
 public class Ticket {
 
-    private Integer lockerNumber;
-    private int boxLocation;
-    private String code;
+    private final int lockerNumber;
+    private final int boxNumber;
+    private final String code;
 
-    public Ticket(int boxLocation, Integer lockerNumber, String code) {
-        this.boxLocation = boxLocation;
+    public Ticket(int boxNumber, int lockerNumber, String code) {
+        this.boxNumber = boxNumber;
         this.lockerNumber = lockerNumber;
         this.code = code;
     }
@@ -16,23 +16,11 @@ public class Ticket {
         return lockerNumber;
     }
 
-    public void setLockerNumber(Integer lockerNumber) {
-        this.lockerNumber = lockerNumber;
-    }
-
     public int getBoxLocation() {
-        return boxLocation;
-    }
-
-    public void setBoxLocation(int boxLocation) {
-        this.boxLocation = boxLocation;
+        return boxNumber;
     }
 
     public String getCode() {
         return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
     }
 }

@@ -12,19 +12,20 @@ import java.util.stream.IntStream;
 
 public class LockerManager {
 
-    private final int capacity = 24;
-    private int availableCount = capacity;
+    private final int capacity;
+    private int availableCount;
     private final int lockerNumber;
-    private final Map<String, Box> boxTicketMap = new HashMap<>();
+    private final Map<String, Box> codeBoxMap = new HashMap<>();
 
     private final List<Box> boxes;
 
-    public LockerManager(int lockerNumber) {
+    public LockerManager(int lockerNumber, int capacity) {
+        this.capacity = capacity;
         this.lockerNumber = lockerNumber;
+        this.availableCount = capacity;
         boxes = IntStream.range(0, capacity)
-            .mapToObj(location -> new Box(lockerNumber, location + 1))
+            .mapToObj(boxNumber -> new Box(lockerNumber, boxNumber + 1))
             .collect(Collectors.toList());
-
     }
 
     public Ticket savePackage() {
@@ -33,14 +34,14 @@ public class LockerManager {
             availableBox.setAvailable(false);
             availableCount--;
             Ticket ticket = generateTicket(availableBox);
-            boxTicketMap.put(ticket.getCode(), availableBox);
+            codeBoxMap.put(ticket.getCode(), availableBox);
             return ticket;
         }
         return null;
     }
 
     public Box getPackage(Ticket ticket) {
-        Box box = boxTicketMap.remove(ticket.getCode());
+        Box box = codeBoxMap.remove(ticket.getCode());
         if (box != null) {
             box.setAvailable(true);
             availableCount++;
@@ -54,7 +55,7 @@ public class LockerManager {
 
     private Ticket generateTicket(Box availableBox) {
         String code = String.format("%s%04d", UUID.randomUUID().toString(), this.lockerNumber);
-        return new Ticket(availableBox.getLocation(), this.lockerNumber, code);
+        return new Ticket(availableBox.getBoxNumber(), this.lockerNumber, code);
     }
 
     private Box getAvailableBox() {
