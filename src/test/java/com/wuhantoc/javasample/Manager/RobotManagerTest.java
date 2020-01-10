@@ -57,7 +57,7 @@ class RobotManagerTest {
         RobotManager robotManager = new RobotManager();
 
         //when
-        Ticket ticket = robotManager.saveBox();
+        Ticket ticket = robotManager.savePackage();
 
         //then
         assertNotNull(ticket);
@@ -72,7 +72,7 @@ class RobotManagerTest {
         fullLocker(robotManager, 1);
 
         //when
-        Ticket ticket = robotManager.saveBox();
+        Ticket ticket = robotManager.savePackage();
 
         //then
         assertNotNull(ticket);
@@ -86,7 +86,7 @@ class RobotManagerTest {
         fullAllLockers(robotManager);
 
         //when
-        Ticket ticket = robotManager.saveBox();
+        Ticket ticket = robotManager.savePackage();
 
         //then
         assertNull(ticket);
@@ -96,14 +96,14 @@ class RobotManagerTest {
     void should_return_correct_box_when_robot_unlock_box_given_valid_ticket() {
         //given
         RobotManager robotManager = new RobotManager();
-        Ticket ticket = robotManager.saveBox();
+        Ticket ticket = robotManager.savePackage();
 
         //when
-        Box box = robotManager.unLock(ticket);
+        Box box = robotManager.getPackage(ticket);
 
         //then
         assertNotNull(box);
-        assertEquals(ticket.getLockerNumber(), box.getLockNumber());
+        assertEquals(ticket.getLockerNumber(), box.getLockerNum());
         assertEquals(ticket.getBoxLocation(), box.getLocation());
     }
 
@@ -114,14 +114,14 @@ class RobotManagerTest {
         Ticket ticket = new Ticket(1, 1, "123");
 
         //when
-        Box box = robotManager.unLock(ticket);
+        Box box = robotManager.getPackage(ticket);
 
         //then
         assertNull(box);
     }
 
     private void fullAllBox(LockerManager lockerManager) {
-        IntStream.range(0, lockerManager.getCapacity()).forEach(index -> lockerManager.saveBox());
+        IntStream.range(0, lockerManager.getCapacity()).forEach(index -> lockerManager.savePackage());
     }
 
 

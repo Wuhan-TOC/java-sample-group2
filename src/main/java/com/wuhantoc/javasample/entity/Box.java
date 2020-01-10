@@ -2,24 +2,21 @@ package com.wuhantoc.javasample.entity;
 
 public class Box {
 
-    private int location;
-
-    private int lockNumber;
-
+    private final int location;
+    private final int lockerNum;
     private boolean available = true;
 
-    public Box(int lockNumber, int location) {
-        this.lockNumber = lockNumber;
+    public Box(int lockerNum, int location) {
+        this.lockerNum = lockerNum;
         this.location = location;
     }
-
 
     public int getLocation() {
         return location;
     }
 
-    public void setLocation(int location) {
-        this.location = location;
+    public int getLockerNum() {
+        return lockerNum;
     }
 
     public boolean isAvailable() {
@@ -28,13 +25,5 @@ public class Box {
 
     public void setAvailable(boolean available) {
         this.available = available;
-    }
-
-    public int getLockNumber() {
-        return lockNumber;
-    }
-
-    public void setLockNumber(int lockNumber) {
-        this.lockNumber = lockNumber;
     }
 }

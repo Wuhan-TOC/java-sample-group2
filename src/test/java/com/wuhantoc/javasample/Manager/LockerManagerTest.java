@@ -12,7 +12,7 @@ public class LockerManagerTest {
         //given 24 available boxes
         LockerManager lockerManager = new LockerManager(1);
         //When
-        Ticket ticket = lockerManager.saveBox();
+        Ticket ticket = lockerManager.savePackage();
         int availableBoxCount = lockerManager.getAvailableCount();
 
         //then
@@ -27,7 +27,7 @@ public class LockerManagerTest {
         fullAllBox(lockerManager);
 
         //when
-        Ticket scannerCode = lockerManager.saveBox();
+        Ticket scannerCode = lockerManager.savePackage();
         int availableBoxCount = lockerManager.getAvailableCount();
 
         //then
@@ -40,10 +40,10 @@ public class LockerManagerTest {
 
         //given 23 available boxes
         LockerManager lockerManager = new LockerManager(1);
-        Ticket ticket = lockerManager.saveBox();
+        Ticket ticket = lockerManager.savePackage();
 
         //when
-        Box box = lockerManager.unLockBox(ticket);
+        Box box = lockerManager.getPackage(ticket);
         int availableBoxCount = lockerManager.getAvailableCount();
 
         //then
@@ -60,7 +60,7 @@ public class LockerManagerTest {
         Ticket ticket = new Ticket(1,2,"123");
 
         //when
-        Box box = lockerManager.unLockBox(ticket);
+        Box box = lockerManager.getPackage(ticket);
 
         //then
         Assertions.assertNull(box);
@@ -69,7 +69,7 @@ public class LockerManagerTest {
 
     private void fullAllBox(LockerManager lockerManager) {
         for (int i = 0; i < lockerManager.getCapacity(); i++) {
-            lockerManager.saveBox();
+            lockerManager.savePackage();
         }
     }
 }

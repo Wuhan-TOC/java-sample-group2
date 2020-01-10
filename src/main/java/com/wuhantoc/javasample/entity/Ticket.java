@@ -4,12 +4,12 @@ public class Ticket {
 
     private Integer lockerNumber;
     private int boxLocation;
-    private String scannerCode;
+    private String code;
 
-    public Ticket(int boxLocation, Integer lockerNumber, String scannerCode) {
+    public Ticket(int boxLocation, Integer lockerNumber, String code) {
         this.boxLocation = boxLocation;
         this.lockerNumber = lockerNumber;
-        this.scannerCode = scannerCode;
+        this.code = code;
     }
 
     public Integer getLockerNumber() {
@@ -28,11 +28,11 @@ public class Ticket {
         this.boxLocation = boxLocation;
     }
 
-    public String getScannerCode() {
-        return scannerCode;
+    public String getCode() {
+        return code;
     }
 
-    public void setScannerCode(String scannerCode) {
-        this.scannerCode = scannerCode;
+    public void setCode(String code) {
+        this.code = code;
     }
 }
