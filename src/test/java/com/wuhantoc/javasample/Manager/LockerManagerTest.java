@@ -8,20 +8,21 @@ import org.junit.jupiter.api.Test;
 class LockerManagerTest {
 
     @Test
-    void should_return_not_null_ticket_and_empty_box_quantity_reduce_1_when_have_available_box() {
+    void should_return_ticket_has_correct_locker_number_and_empty_box_quantity_reduce_1_when_locker_save_package_given_locker_24_capacity_no_box_used() {
         //given 24 available boxes
         LockerManager lockerManager = new LockerManager(1,24);
+
         //When
         Ticket ticket = lockerManager.savePackage();
         int availableBoxCount = lockerManager.getAvailableCount();
 
         //then
-        Assertions.assertNotNull(ticket);
+        Assertions.assertEquals(1, ticket.getLockerNumber());
         Assertions.assertEquals(23, availableBoxCount);
     }
 
     @Test
-    void should_return_null_when_saving_but_have_not_available_box() {
+    void should_return_null_when_save_package_given_locker_0_capacity() {
         //given 0 available box
         LockerManager lockerManager = new LockerManager(1,0);
         fullAllBox(lockerManager);
@@ -36,8 +37,7 @@ class LockerManagerTest {
     }
 
     @Test
-    void should_return_box_and_available_box_count_add_1_when_given_valid_scanner_code() {
-
+    void should_return_one_available_box_and_available_box_count_add_1_when_get_package_given_valid_ticket() {
         //given 23 available boxes
         LockerManager lockerManager = new LockerManager(1,24);
         Ticket ticket = lockerManager.savePackage();
@@ -54,7 +54,7 @@ class LockerManagerTest {
     }
 
     @Test
-    void should_return_null_when_given_invalid_scanner_code() {
+    void should_return_null_when_get_package_given_fake_ticket() {
         //given
         LockerManager lockerManager = new LockerManager(1,24);
         Ticket ticket = new Ticket(1,2,"123");
@@ -68,15 +68,16 @@ class LockerManagerTest {
     }
 
     @Test
-    void should_vacancy_rate_eauql_50_percent_when_save_package_success_given_2_box() {
+    void should_vacancy_rate_equal_50_percent_get_vacancy_rate_given_locker_2_capacity_1_box_used() {
         // given
         LockerManager lockerManager = new LockerManager(1, 2);
-
-        // when
         lockerManager.savePackage();
 
+        // when
+        double vacancyRate = lockerManager.getVacancyRate();
+
         // than
-        Assertions.assertEquals(0.5d, lockerManager.getVacancyRate());
+        Assertions.assertEquals(0.5d, vacancyRate);
     }
 
     private void fullAllBox(LockerManager lockerManager) {
