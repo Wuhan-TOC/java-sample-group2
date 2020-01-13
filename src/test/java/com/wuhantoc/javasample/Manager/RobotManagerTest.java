@@ -1,16 +1,14 @@
 package com.wuhantoc.javasample.Manager;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import com.wuhantoc.javasample.entity.Box;
 import com.wuhantoc.javasample.entity.Ticket;
+import org.junit.jupiter.api.Test;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
-import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class RobotManagerTest {
@@ -19,7 +17,7 @@ class RobotManagerTest {
     private final List<Integer> capacities = Arrays.asList(24, 24, 24, 24);
 
     @Test
-    void should_return_locker_manager_when_find_locker_by_locker_number_given_valid_locker_number() {
+    void should_return_locker1_when_find_locker_by_locker_number_given_4_lockers_locker_number_equals_1() {
         //given
         RobotManager robotManager = new RobotManager(lockerSum, capacities);
         Integer lockerNumber = 1;
@@ -27,12 +25,13 @@ class RobotManagerTest {
         //when
         LockerManager lockerManager = robotManager.findLockerByNumber(lockerNumber);
 
+        //then
         assertNotNull(lockerManager);
     }
 
 
     @Test
-    void should_return_locker_manager_when_find_locker_by_locker_number_given_invalid_locker_number() {
+    void should_return_null_when_find_locker_by_locker_number_given_4_lockers_locker_number_equals_11() {
         //given
         RobotManager robotManager = new RobotManager(lockerSum, capacities);
         Integer lockerNumber = 11;
@@ -40,25 +39,26 @@ class RobotManagerTest {
         //when
         LockerManager lockerManager = robotManager.findLockerByNumber(lockerNumber);
 
+        //then
         assertNull(lockerManager);
     }
 
     @Test
-    void should_return_first_not_empty_Locker_Manger_when_find_first_not_empty_locker_given_an_not_empty_locker_collectors() {
+    void should_return_locker2_when_find_first_not_empty_locker_given_4_lockers_locker1_full_locker_2_empty() {
         //given
         RobotManager robotManager = new RobotManager(lockerSum, capacities);
         fullLocker(robotManager, 1);
 
+        //then
         LockerManager lockerManager = robotManager.findFirstNotEmptyLockerManger();
 
-        assertNotNull(lockerManager);
+        //then
         assertEquals(2, lockerManager.getLockerNumber());
-        assertTrue(lockerManager.isAvailable());
     }
 
 
     @Test
-    void should_get_not_null_ticket_and_locker_number_is_1_when_robot_save_package_given_10_empty_lockers() {
+    void should_get_not_null_ticket_and_locker_number_is_1_when_robot_save_package_given_4_empty_lockers() {
         //given
         RobotManager robotManager = new RobotManager(lockerSum, capacities);
 
@@ -72,7 +72,7 @@ class RobotManagerTest {
     }
 
     @Test
-    void should_get_not_null_ticket_and_locker_number_is_2_when_robot_save_package_given_first_locker_is_full_and_second_is_empty() {
+    void should_get_not_null_ticket_and_locker_number_is_2_when_robot_save_package_given_4_lockers_locker1_is_full_and_locker2_is_empty() {
         //given
         RobotManager robotManager = new RobotManager(lockerSum, capacities);
         fullLocker(robotManager, 1);
@@ -114,7 +114,7 @@ class RobotManagerTest {
     }
 
     @Test
-    void should_return_null_when_robot_unlock_box_given_invalid_ticker() {
+    void should_return_null_when_robot_unlock_box_given_fake_ticker() {
         //given
         RobotManager robotManager = new RobotManager(lockerSum, capacities);
         Ticket ticket = new Ticket(1, 1, "123");
