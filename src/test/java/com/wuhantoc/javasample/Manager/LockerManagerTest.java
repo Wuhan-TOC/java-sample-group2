@@ -67,6 +67,18 @@ class LockerManagerTest {
 
     }
 
+    @Test
+    void should_vacancy_rate_eauql_50_percent_when_save_package_success_given_2_box() {
+        // given
+        LockerManager lockerManager = new LockerManager(1, 2);
+
+        // when
+        lockerManager.savePackage();
+
+        // than
+        Assertions.assertEquals(0.5d, lockerManager.getVacancyRate());
+    }
+
     private void fullAllBox(LockerManager lockerManager) {
         for (int i = 0; i < lockerManager.getCapacity(); i++) {
             lockerManager.savePackage();

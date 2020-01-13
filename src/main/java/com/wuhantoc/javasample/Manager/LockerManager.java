@@ -15,6 +15,7 @@ public class LockerManager {
     private final int capacity;
     private int availableCount;
     private final int lockerNumber;
+    private double vacancyRate;
     private final Map<String, Box> codeBoxMap = new HashMap<>();
 
     private final List<Box> boxes;
@@ -23,6 +24,7 @@ public class LockerManager {
         this.capacity = capacity;
         this.lockerNumber = lockerNumber;
         this.availableCount = capacity;
+        this.vacancyRate = (double) availableCount / (double) capacity;
         boxes = IntStream.range(0, capacity)
             .mapToObj(boxNumber -> new Box(lockerNumber, boxNumber + 1))
             .collect(Collectors.toList());
@@ -31,8 +33,7 @@ public class LockerManager {
     public Ticket savePackage() {
         Box availableBox = getAvailableBox();
         if (availableBox != null) {
-            availableBox.setAvailable(false);
-            availableCount--;
+            occupyBox(availableBox);
             Ticket ticket = generateTicket(availableBox);
             codeBoxMap.put(ticket.getCode(), availableBox);
             return ticket;
@@ -42,11 +43,25 @@ public class LockerManager {
 
     public Box getPackage(Ticket ticket) {
         Box box = codeBoxMap.remove(ticket.getCode());
+        releaseBox(box);
+        return box;
+    }
+
+
+    private void occupyBox(Box box) {
+        if (box != null) {
+            box.setAvailable(false);
+            availableCount--;
+            vacancyRate = (double) availableCount / (double) capacity;
+        }
+    }
+
+    private void releaseBox(Box box) {
         if (box != null) {
             box.setAvailable(true);
             availableCount++;
+            vacancyRate = (double) availableCount / (double) capacity;
         }
-        return box;
     }
 
     public Boolean isAvailable() {
@@ -72,5 +87,9 @@ public class LockerManager {
 
     public int getLockerNumber() {
         return lockerNumber;
+    }
+
+    public double getVacancyRate() {
+        return vacancyRate;
     }
 }
