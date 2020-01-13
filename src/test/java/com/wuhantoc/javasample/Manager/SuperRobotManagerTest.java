@@ -1,5 +1,6 @@
 package com.wuhantoc.javasample.Manager;
 
+import com.wuhantoc.javasample.entity.Box;
 import com.wuhantoc.javasample.entity.Ticket;
 import java.util.Arrays;
 import org.junit.jupiter.api.Test;
@@ -63,6 +64,33 @@ public class SuperRobotManagerTest {
 
         // then
         assertNull(ticket);
+    }
+
+    @Test
+    void should_return_box_when_given_valid_scanner_code() {
+        // given
+        SuperRobotManager superRobotManager = new SuperRobotManager(2, Arrays.asList(4, 2));
+        Ticket ticket = superRobotManager.savePackage();
+
+        //when
+        Box box = superRobotManager.getPackage(ticket);
+
+        //then
+        assertNotNull(box);
+        assertTrue(box.isAvailable());
+    }
+
+    @Test
+    void should_return_null_when_given_fake_scanner_code() {
+        // given
+        SuperRobotManager superRobotManager = new SuperRobotManager(2, Arrays.asList(2, 2));
+        Ticket ticket = new Ticket(1,2,"123");
+
+        //when
+        Box box = superRobotManager.getPackage(ticket);
+
+        //then
+        assertNull(box);
     }
 
 }

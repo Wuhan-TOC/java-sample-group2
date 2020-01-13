@@ -28,7 +28,10 @@ public class SuperRobotManager {
     }
 
     public Box getPackage(Ticket ticket) {
-        return null;
+        LockerManager lockerManager = lockerManagers.stream()
+                    .filter(locker -> locker.getLockerNumber() == ticket.getLockerNumber())
+                    .findFirst().orElse(null);
+        return lockerManager.getPackage(ticket);
     }
 
 
