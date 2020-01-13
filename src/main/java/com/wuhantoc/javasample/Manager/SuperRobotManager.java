@@ -41,4 +41,8 @@ public class SuperRobotManager {
         }
         return maxLockerManager;
     }
+
+    public List<LockerManager> getLockerManagers() {
+        return lockerManagers;
+    }
 }
