@@ -24,7 +24,7 @@ class LockerManagerTest {
     @Test
     void should_return_null_when_save_package_given_locker_0_capacity() {
         //given 0 available box
-        LockerManager lockerManager = new LockerManager(1,0);
+        LockerManager lockerManager = new LockerManager(1,1);
         fullAllBox(lockerManager);
 
         //when
