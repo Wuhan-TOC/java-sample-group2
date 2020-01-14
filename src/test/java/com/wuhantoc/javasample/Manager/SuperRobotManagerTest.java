@@ -55,9 +55,11 @@ public class SuperRobotManagerTest {
     }
 
     @Test
-    public void should_return_null_when_save_package_given_locker1_has_0_capacity_and_locker2_has_0_capacity () {
+    public void should_return_null_when_save_package_given_locker1_has_1_capacity_1_used_and_locker2_has_1_capacity_1_box_used () {
         // given
-        SuperRobotManager superRobotManager = new SuperRobotManager(2, Arrays.asList(0, 0));
+        SuperRobotManager superRobotManager = new SuperRobotManager(2, Arrays.asList(1, 1));
+        superRobotManager.getLockerManagers().get(0).savePackage();
+        superRobotManager.getLockerManagers().get(1).savePackage();
 
         // when
         Ticket ticket = superRobotManager.savePackage();

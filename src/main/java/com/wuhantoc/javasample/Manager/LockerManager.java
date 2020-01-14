@@ -12,6 +12,8 @@ import java.util.stream.IntStream;
 
 public class LockerManager {
 
+
+    private static final String PARAM_INVALID = "capacity can't lower than zero";
     private final int capacity;
     private int availableCount;
     private final int lockerNumber;
@@ -21,6 +23,9 @@ public class LockerManager {
     private final List<Box> boxes;
 
     public LockerManager(int lockerNumber, int capacity) {
+        if (capacity <= 0d) {
+            throw new RuntimeException(PARAM_INVALID);
+        }
         this.capacity = capacity;
         this.lockerNumber = lockerNumber;
         this.availableCount = capacity;
