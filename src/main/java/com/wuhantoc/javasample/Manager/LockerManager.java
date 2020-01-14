@@ -23,7 +23,7 @@ public class LockerManager {
     private final List<Box> boxes;
 
     public LockerManager(int lockerNumber, int capacity) {
-        if (capacity <= 0d) {
+        if (capacity <= 0) {
             throw new RuntimeException(PARAM_INVALID);
         }
         this.capacity = capacity;
