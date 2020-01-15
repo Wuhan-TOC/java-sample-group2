@@ -53,11 +53,10 @@ class LockerTest {
     }
 
     @Test
-    void should_return_null_when_get_package_given_used_ticket() {
+    void should_return_null_when_get_package_given_fake_ticket() {
         //given
         Locker locker = new Locker(1,24);
-        Ticket ticket = locker.savePackage(new Bag());
-        locker.getPackage(ticket);
+        Ticket ticket = new Ticket(1,2,"123");
 
         //when
         Bag bag = locker.getPackage(ticket);
@@ -68,10 +67,11 @@ class LockerTest {
     }
 
     @Test
-    void should_return_null_when_get_package_given_fake_ticket() {
+    void should_return_null_when_get_package_given_used_ticket() {
         //given
         Locker locker = new Locker(1,24);
-        Ticket ticket = new Ticket(1,2,"123");
+        Ticket ticket = locker.savePackage(new Bag());
+        locker.getPackage(ticket);
 
         //when
         Bag bag = locker.getPackage(ticket);
