@@ -1,12 +1,12 @@
 package com.wuhantoc.javasample.Robot;
 
-import com.wuhantoc.javasample.Locker.Box;
+import com.wuhantoc.javasample.Locker.Bag;
 import com.wuhantoc.javasample.Locker.Ticket;
 
 public interface Robot {
 
-   Ticket savePackage();
+   Ticket savePackage(Bag bag);
 
-   Box getPackage(Ticket ticket);
+   Bag getPackage(Ticket ticket);
 
 }

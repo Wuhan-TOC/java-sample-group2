@@ -1,60 +1,27 @@
 package com.wuhantoc.javasample.Robot;
 
-import com.wuhantoc.javasample.Locker.Box;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
+import com.wuhantoc.javasample.Locker.Bag;
 import com.wuhantoc.javasample.Locker.Locker;
 import com.wuhantoc.javasample.Locker.Ticket;
-import org.junit.jupiter.api.Test;
-
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.IntStream;
-
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 
 class GraduateRobotTest {
 
     @Test
-    void should_return_locker1_when_find_locker_by_locker_number_given_2_lockers_locker_number_equals_1() {
-        //given
-        Locker locker1 = new Locker(1, 24);
-        Locker locker2 = new Locker(2, 24);
-        GraduateRobot graduateRobot = new GraduateRobot(Arrays.asList(locker1, locker2));
-        Integer lockerNumber = 1;
-
-        //when
-        Locker locker = graduateRobot.findLockerByNumber(lockerNumber);
-
-        //then
-        assertNotNull(locker);
-    }
-
-
-    @Test
-    void should_return_null_when_find_locker_by_locker_number_given_2_lockers_locker_number_equals_11() {
-        //given
-        Locker locker1 = new Locker(1, 24);
-        Locker locker2 = new Locker(2, 24);
-        GraduateRobot graduateRobot = new GraduateRobot(Arrays.asList(locker1, locker2));
-        Integer lockerNumber = 11;
-
-        //when
-        Locker locker = graduateRobot.findLockerByNumber(lockerNumber);
-
-        //then
-        assertNull(locker);
-    }
-
-    @Test
     void should_return_locker2_when_find_first_not_empty_locker_given_2_lockers_locker1_full_locker_2_empty() {
         //given
-        Locker locker1 = new Locker(1, 24);
+        Locker locker1 = getFullLocker(1, 24);
         Locker locker2 = new Locker(2, 24);
-        fullLocker(locker1);
         GraduateRobot graduateRobot = new GraduateRobot(Arrays.asList(locker1, locker2));
 
         //then
-        Locker locker = graduateRobot.findFirstNotEmptyLockerManger();
+        Locker locker = graduateRobot.findLockerToSave();
 
         //then
         assertEquals(2, locker.getLockerNumber());
@@ -67,13 +34,13 @@ class GraduateRobotTest {
         Locker locker1 = new Locker(1, 24);
         Locker locker2 = new Locker(2, 24);
         GraduateRobot graduateRobot = new GraduateRobot(Arrays.asList(locker1, locker2));
+        Bag bag = new Bag();
 
         //when
-        Ticket ticket = graduateRobot.savePackage();
+        Ticket ticket = graduateRobot.savePackage(bag);
 
         //then
         assertNotNull(ticket);
-        assertEquals(ticket.getLockerNumber(), ticket.getLockerNumber());
         assertEquals(1, ticket.getLockerNumber());
 
     }
@@ -81,13 +48,12 @@ class GraduateRobotTest {
     @Test
     void should_get_not_null_ticket_and_locker_number_is_2_when_robot_save_package_given_2_lockers_locker1_is_full_and_locker2_is_empty() {
         //given
-        Locker locker1 = new Locker(1, 24);
+        Locker locker1 = getFullLocker(1, 24);
         Locker locker2 = new Locker(2, 24);
-        fullLocker(locker1);
         GraduateRobot graduateRobot = new GraduateRobot(Arrays.asList(locker1, locker2));
-
+        Bag bag = new Bag();
         //when
-        Ticket ticket = graduateRobot.savePackage();
+        Ticket ticket = graduateRobot.savePackage(bag);
 
         //then
         assertNotNull(ticket);
@@ -97,34 +63,31 @@ class GraduateRobotTest {
     @Test
     void should_get_null_ticket_when_robot_save_package_given_2_full_lockers() {
         //given
-        Locker locker1 = new Locker(1, 24);
-        Locker locker2 = new Locker(2, 24);
-        fullLocker(locker1);
-        fullLocker(locker2);
+        Locker locker1 = getFullLocker(1, 24);
+        Locker locker2 = getFullLocker(2, 24);
         GraduateRobot graduateRobot = new GraduateRobot(Arrays.asList(locker1, locker2));
 
         //when
-        Ticket ticket = graduateRobot.savePackage();
+        Ticket ticket = graduateRobot.savePackage(new Bag());
 
         //then
         assertNull(ticket);
     }
 
     @Test
-    void should_return_correct_box_when_robot_unlock_box_given_valid_ticket() {
+    void should_return_correct_bag_when_robot_unlock_box_given_valid_ticket() {
         //given
         Locker locker1 = new Locker(1, 24);
         Locker locker2 = new Locker(2, 24);
         GraduateRobot graduateRobot = new GraduateRobot(Arrays.asList(locker1, locker2));
-        Ticket ticket = graduateRobot.savePackage();
+        Bag savedBag = new Bag();
+        Ticket ticket = graduateRobot.savePackage(savedBag);
 
         //when
-        Box box = graduateRobot.getPackage(ticket);
+        Bag gotBag = graduateRobot.getPackage(ticket);
 
         //then
-        assertNotNull(box);
-        assertEquals(ticket.getLockerNumber(), box.getLockerNumber());
-        assertEquals(ticket.getBoxLocation(), box.getBoxNumber());
+        assertEquals(savedBag, gotBag);
     }
 
     @Test
@@ -136,15 +99,18 @@ class GraduateRobotTest {
         Ticket ticket = new Ticket(1, 1, "123");
 
         //when
-        Box box = graduateRobot.getPackage(ticket);
+        Bag bag = graduateRobot.getPackage(ticket);
 
         //then
-        assertNull(box);
+        assertNull(bag);
     }
 
-    private void fullLocker(Locker locker) {
-        IntStream.range(0, locker.getCapacity())
-            .forEach(index -> locker.savePackage());
+    private Locker getFullLocker(int lockerNumber, int capacity) {
+        Locker locker = new Locker(lockerNumber, capacity);
+        for (int i = 0; i < locker.getCapacity(); i++) {
+            locker.savePackage(new Bag());
+        }
+        return locker;
     }
 }
 

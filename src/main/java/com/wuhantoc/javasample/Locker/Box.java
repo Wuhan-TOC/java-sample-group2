@@ -4,7 +4,7 @@ public class Box {
 
     private final int boxNumber;
     private final int lockerNumber;
-    private boolean available = true;
+    private Bag bag = null;
 
     public Box(int lockerNumber, int boxNumber) {
         this.lockerNumber = lockerNumber;
@@ -19,11 +19,12 @@ public class Box {
         return lockerNumber;
     }
 
-    public boolean isAvailable() {
-        return available;
+
+    public Bag getBag() {
+        return bag;
     }
 
-    public void setAvailable(boolean available) {
-        this.available = available;
+    public void setBag(Bag bag) {
+        this.bag = bag;
     }
 }

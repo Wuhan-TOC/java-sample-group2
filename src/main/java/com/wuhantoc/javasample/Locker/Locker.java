@@ -27,10 +27,10 @@ public class Locker {
             .collect(Collectors.toList());
     }
 
-    public Ticket savePackage() {
+    public Ticket savePackage(Bag bag) {
         Box availableBox = getAvailableBox();
         if (availableBox != null) {
-            occupyBox(availableBox);
+            availableBox.setBag(bag);
             Ticket ticket = generateTicket(availableBox);
             codeBoxMap.put(ticket.getCode(), availableBox);
             return ticket;
@@ -38,27 +38,16 @@ public class Locker {
         return null;
     }
 
-    public Box getPackage(Ticket ticket) {
+    public Bag getPackage(Ticket ticket) {
         Box box = codeBoxMap.remove(ticket.getCode());
-        releaseBox(box);
-        return box;
+        if (box != null) {
+            return box.getBag();
+        }
+        return null;
     }
 
     public double getVacancyRate() {
         return  (double) (capacity - codeBoxMap.size()) / (double) capacity;
-    }
-
-
-    private void occupyBox(Box box) {
-        if (box != null) {
-            box.setAvailable(false);
-        }
-    }
-
-    private void releaseBox(Box box) {
-        if (box != null) {
-            box.setAvailable(true);
-        }
     }
 
     private Ticket generateTicket(Box availableBox) {
@@ -67,7 +56,7 @@ public class Locker {
     }
 
     private Box getAvailableBox() {
-        return boxes.stream().filter(Box::isAvailable).findAny().orElse(null);
+        return boxes.stream().filter(box -> box.getBag() == null).findAny().orElse(null);
     }
 
     public int getCapacity() {
