@@ -1,4 +1,4 @@
-package com.wuhantoc.javasample.entity;
+package com.wuhantoc.javasample.Locker;
 
 public class Box {
 
