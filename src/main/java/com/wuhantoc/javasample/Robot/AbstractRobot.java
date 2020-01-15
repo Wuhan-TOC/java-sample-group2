@@ -7,7 +7,7 @@ import java.util.List;
 
 public abstract class AbstractRobot implements Robot {
 
-    protected List<Locker> lockers;
+    List<Locker> lockers;
 
     AbstractRobot(List<Locker> lockers){
         this.lockers = lockers;
@@ -44,7 +44,7 @@ public abstract class AbstractRobot implements Robot {
 
     protected abstract Locker findLockerToSave();
 
-    public List<Locker> getLockers() {
+    List<Locker> getLockers() {
         return this.lockers;
     }
 }

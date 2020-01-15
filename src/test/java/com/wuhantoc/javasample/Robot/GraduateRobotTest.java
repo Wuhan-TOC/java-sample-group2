@@ -8,6 +8,7 @@ import com.wuhantoc.javasample.Locker.Bag;
 import com.wuhantoc.javasample.Locker.Locker;
 import com.wuhantoc.javasample.Locker.Ticket;
 import java.util.Arrays;
+import java.util.Collections;
 import org.junit.jupiter.api.Test;
 
 
@@ -97,6 +98,21 @@ class GraduateRobotTest {
         Locker locker2 = new Locker(2, 24);
         GraduateRobot graduateRobot = new GraduateRobot(Arrays.asList(locker1, locker2));
         Ticket ticket = new Ticket(1, 1, "123");
+
+        //when
+        Bag bag = graduateRobot.getPackage(ticket);
+
+        //then
+        assertNull(bag);
+    }
+
+    @Test
+    void should_return_null_when_robot_unlock_box_given_used_ticker() {
+        //given
+        Locker locker1 = new Locker(1, 24);
+        GraduateRobot graduateRobot = new GraduateRobot(Collections.singletonList(locker1));
+        Ticket ticket = graduateRobot.savePackage(new Bag());
+        graduateRobot.getPackage(ticket);
 
         //when
         Bag bag = graduateRobot.getPackage(ticket);
