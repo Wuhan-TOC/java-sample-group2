@@ -1,4 +1,4 @@
-package com.wuhantoc.javasample.Locker;
+package com.wuhantoc.javasample.locker;
 
 import java.util.HashMap;
 import java.util.List;

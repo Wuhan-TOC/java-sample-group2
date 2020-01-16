@@ -1,12 +1,12 @@
-package com.wuhantoc.javasample.Robot;
+package com.wuhantoc.javasample.robot;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-import com.wuhantoc.javasample.Locker.Bag;
-import com.wuhantoc.javasample.Locker.Locker;
-import com.wuhantoc.javasample.Locker.Ticket;
+import com.wuhantoc.javasample.locker.Bag;
+import com.wuhantoc.javasample.locker.Locker;
+import com.wuhantoc.javasample.locker.Ticket;
 import java.util.Arrays;
 import java.util.Collections;
 import org.junit.jupiter.api.Test;

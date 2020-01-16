@@ -1,6 +1,6 @@
-package com.wuhantoc.javasample.Robot;
+package com.wuhantoc.javasample.robot;
 
-import com.wuhantoc.javasample.Locker.Locker;
+import com.wuhantoc.javasample.locker.Locker;
 import java.util.List;
 
 public class GraduateRobot extends AbstractRobot {

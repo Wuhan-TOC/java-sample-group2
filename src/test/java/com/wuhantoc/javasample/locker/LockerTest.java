@@ -1,4 +1,4 @@
-package com.wuhantoc.javasample.Locker;
+package com.wuhantoc.javasample.locker;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

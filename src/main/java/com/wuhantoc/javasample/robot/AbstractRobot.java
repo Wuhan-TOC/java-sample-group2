@@ -1,8 +1,8 @@
-package com.wuhantoc.javasample.Robot;
+package com.wuhantoc.javasample.robot;
 
-import com.wuhantoc.javasample.Locker.Bag;
-import com.wuhantoc.javasample.Locker.Locker;
-import com.wuhantoc.javasample.Locker.Ticket;
+import com.wuhantoc.javasample.locker.Bag;
+import com.wuhantoc.javasample.locker.Locker;
+import com.wuhantoc.javasample.locker.Ticket;
 import java.util.List;
 
 public abstract class AbstractRobot implements Robot {
